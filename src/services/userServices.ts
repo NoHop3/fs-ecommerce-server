@@ -6,7 +6,7 @@ const createUser = async (user: UserDocument): Promise<UserDocument> => {
 }
 
 const findUsers = async (): Promise<UserDocument[]> => {
-  return User.find().sort({ name: 1, publishedYear: -1 })
+  return User.find().sort({ email: 1 })
 }
 
 export default {

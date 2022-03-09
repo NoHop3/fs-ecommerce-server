@@ -1,32 +1,26 @@
 import { Request, Response, NextFunction } from 'express'
 
-import User from '../models/User'
-import UserService from '../services/userServices'
+import OrderLine from '../models/OrderLine'
+import OrderLineService from '../services/orderLineServices'
 import { BadRequestError } from '../helpers/apiError'
 
-// POST /users
-export const createUser = async (
+// POST /orderLines
+export const createOrderLine = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const { email, username, password, firstName, lastName } = req.body
+    const { quantity, price } = req.body
 
-    const user = new User({
-      email,
-      username,
-      password,
-      firstName,
-      lastName,
-      isAdmin: false,
-      hasWriteAccess: false,
-      orders: [],
-      favourites: [],
+    const orderLine = new OrderLine({
+      productId: req.params.productId,
+      quantity,
+      price,
     })
 
-    await UserService.createUser(user)
-    res.json(user)
+    await OrderLineService.createOrderLine(orderLine)
+    res.json(orderLine)
   } catch (error) {
     console.log(error)
     if (error instanceof Error && error.name == 'ValidationError') {
@@ -37,14 +31,14 @@ export const createUser = async (
   }
 }
 
-// GET /users
-export const findUsers = async (
+// GET /orderLines
+export const findOrderLines = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    res.json(await UserService.findUsers())
+    res.json(await OrderLineService.findOrderLines())
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {
       next(new BadRequestError('Invalid Request', error))
