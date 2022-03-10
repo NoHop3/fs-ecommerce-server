@@ -8,10 +8,10 @@ export type OrderDocument = Document & {
 }
 
 const orderSchema = new mongoose.Schema({
-  userId: { Type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-  ordersLines: [
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  orderLines: [
     {
-      Type: mongoose.Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: 'OrderLine',
     },
   ],

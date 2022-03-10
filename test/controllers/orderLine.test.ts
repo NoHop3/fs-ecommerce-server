@@ -1,0 +1,139 @@
+import request from 'supertest'
+
+import { OrderLineDocument } from '../../src/models/OrderLine'
+import app from '../../src/app'
+import connect, { MongodHelper } from '../db-helper'
+import { ProductDocument } from '../../src/models/Product'
+
+const nonExistingOrderLineId = '5e57b77b5744fa0b461c7906'
+//! Insert existing productId in order to test or create a product here
+let product
+
+async function createProduct(override?: Partial<ProductDocument>) {
+  product = {
+    name: 'Example Product X',
+    image: 'http://something.com',
+    category: 'Hookahs',
+    color: 'Deep Blue Fade',
+    price: 49.99,
+  }
+
+  if (override) {
+    product = { ...product, ...override }
+  }
+
+  return await request(app).post('/api/v1/products').send(product)
+}
+createProduct()
+
+const existingProductId = product._id
+
+async function createOrderLine(override?: Partial<OrderLineDocument>) {
+  let orderLine = {
+    productId: existingProductId,
+    quantity: 4,
+    price: 2.99,
+  }
+
+  if (override) {
+    orderLine = { ...orderLine, ...override }
+  }
+
+  return await request(app)
+    .post(`/api/v1/orderLines/${existingProductId}`)
+    .send(orderLine)
+}
+
+describe('orderLine controller', () => {
+  let mongodHelper: MongodHelper
+
+  beforeAll(async () => {
+    mongodHelper = await connect()
+  })
+
+  afterEach(async () => {
+    await mongodHelper.clearDatabase()
+  })
+
+  afterAll(async () => {
+    await mongodHelper.closeDatabase()
+  })
+
+  it('should create a orderLine', async () => {
+    const res = await createOrderLine()
+    expect(res.status).toBe(200)
+    expect(res.body).toHaveProperty('_id')
+    expect(res.body.productId).toBe(`${existingProductId}`)
+  })
+
+  it('should not create a orderLine with wrong data', async () => {
+    const res = await request(app).post('/api/v1/orderLines').send({
+      // These fields should be included
+      // productId: existingProductId,
+    })
+    expect(res.status).toBe(400)
+  })
+
+  it('should get back an existing orderLine', async () => {
+    let res = await createOrderLine()
+    expect(res.status).toBe(200)
+
+    const orderLineId = res.body._id
+    res = await request(app).get(`/api/v1/orderLines/${orderLineId}`)
+
+    expect(res.body._id).toEqual(orderLineId)
+  })
+
+  it('should not get back a non-existing orderLine', async () => {
+    const res = await request(app).get(
+      `/api/v1/orderLines/${nonExistingOrderLineId}`
+    )
+    expect(res.status).toBe(404)
+  })
+
+  it('should get back all orderLine', async () => {
+    const res1 = await createOrderLine({
+      quantity: 4,
+      price: 2.99,
+    })
+    const res2 = await createOrderLine({
+      quantity: 3,
+      price: 6.99,
+    })
+
+    const res3 = await request(app).get('/api/v1/orderLines')
+
+    expect(res3.body.length).toEqual(2)
+    expect(res3.body[0]._id).toEqual(res1.body._id)
+    expect(res3.body[1]._id).toEqual(res2.body._id)
+  })
+
+  it('should update an existing orderLine', async () => {
+    let res = await createOrderLine()
+    expect(res.status).toBe(200)
+    const orderLineId = res.body._id
+    const update = {
+      productId: 'someOtherProductId',
+    }
+
+    res = await request(app)
+      .put(`/api/v1/orderLines/${orderLineId}`)
+      .send(update)
+
+    expect(res.status).toEqual(200)
+    expect(res.body.productId).toEqual('someOtherProductId')
+  })
+
+  it('should delete an existing orderLine', async () => {
+    let res = await createOrderLine()
+    expect(res.status).toBe(200)
+    const orderLineId = res.body._id
+
+    res = await request(app).delete(`/api/v1/orderLines/${orderLineId}`)
+
+    expect(res.status).toEqual(204)
+
+    res = await request(app).get(`/api/v1/orderLines/${orderLineId}`)
+    expect(res.status).toBe(404)
+  })
+})

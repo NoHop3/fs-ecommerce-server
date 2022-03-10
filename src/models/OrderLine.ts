@@ -8,13 +8,13 @@ export type OrderLineDocument = Document & {
 }
 
 const orderLineSchema = new mongoose.Schema({
+  quantity: { type: Number, default: 1 },
+  price: Number,
   productId: {
-    Type: mongoose.Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'Product',
     required: true,
   },
-  quantity: { Type: Number, default: 1 },
-  price: Number,
 })
 
 export default mongoose.model<OrderLineDocument>('OrderLine', orderLineSchema)

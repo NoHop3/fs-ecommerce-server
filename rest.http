@@ -5,7 +5,8 @@ POST http://localhost:5000/api/v1/users
 Content-Type: application/json
 
 {
-  "username": "Rgeorge2",
+  "email":"r_geo@gmail.com",
+  "username": "Rgeor",
   "password": "12344321",
   "firstName": "Rafael",
   "lastName": "Georgio"
@@ -21,7 +22,7 @@ POST http://localhost:5000/api/v1/products
 Content-Type: application/json
 
 {
-  "name":"Sample Product",
+  "name":"Sample Product3",
   "image":"http://www.sample.com"
 }
 
@@ -31,7 +32,7 @@ GET http://localhost:5000/api/v1/products
 ########### OrderLines ###############
 
 ###
-POST http://localhost:5000/api/v1/orderLines/productId
+POST http://localhost:5000/api/v1/orderLines/6229f8d34f07b73d003e72e9
 Content-Type: application/json
 
 {
@@ -39,7 +40,7 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:5000/api/v1/orderLines/productId
+POST http://localhost:5000/api/v1/orderLines/6229f8e74f07b73d003e72ed
 Content-Type: application/json
 
 {
@@ -53,15 +54,16 @@ GET http://localhost:5000/api/v1/orderLines
 ########### Orders ###############
 
 ###
-POST http://localhost:5000/api/v1/orders
+POST http://localhost:5000/api/v1/orders/6229f9524f07b73d003e72f4
 Content-Type: application/json
 
 {
+  "orderLines":[
+      {"_id": "6229f8df4f07b73d003e72eb"},
+      {"_id": "6229f8f14f07b73d003e72ef"}
+  ],
   "totalPrice":"121.99"
 }
 
 ###
-GET http://localhost:5000/api/v1/orders
-
-###
-GET http://localhost:5000/api/v1/orders/userId
+GET http://localhost:5000/api/v1/orders/6229f9524f07b73d003e72f4

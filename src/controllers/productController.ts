@@ -11,9 +11,7 @@ export const createProduct = async (
   next: NextFunction
 ) => {
   try {
-    //! To change
     const { name, image, category, price, color } = req.body
-
     const product = new Product({
       name,
       image,
@@ -42,6 +40,57 @@ export const findProducts = async (
 ) => {
   try {
     res.json(await ProductService.findProducts())
+  } catch (error) {
+    if (error instanceof Error && error.name == 'ValidationError') {
+      next(new BadRequestError('Invalid Request', error))
+    } else {
+      next(error)
+    }
+  }
+}
+
+// GET /product by ID
+export const findProductById = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    res.json(await ProductService.findById(req.params.productId))
+  } catch (error) {
+    if (error instanceof Error && error.name == 'ValidationError') {
+      next(new BadRequestError('Invalid Request', error))
+    } else {
+      next(error)
+    }
+  }
+}
+
+// PUT /:productId
+export const updateProductById = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    res.json(await ProductService.updateById(req.params.productId, req.body))
+  } catch (error) {
+    if (error instanceof Error && error.name == 'ValidationError') {
+      next(new BadRequestError('Invalid Request', error))
+    } else {
+      next(error)
+    }
+  }
+}
+
+// DELETE /:productId
+export const deleteProductById = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    res.json(await ProductService.deleteById(req.params.productId))
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {
       next(new BadRequestError('Invalid Request', error))

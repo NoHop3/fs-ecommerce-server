@@ -1,0 +1,106 @@
+import OrderLine from '../../src/models/OrderLine'
+import OrderLineService from '../../src/services/orderLineServices'
+import ProductService from '../../src/services/productServices'
+import connect, { MongodHelper } from '../db-helper'
+
+const nonExistingOrderLineId = '5e57b77b5744fa0b461c7906'
+
+//! Insert existing productId in order to test or create a product here
+let product
+
+async function createProduct() {
+  product = {
+    name: 'Example Product X',
+    image: 'http://something.com',
+    category: 'Hookahs',
+    color: 'Deep Blue Fade',
+    price: 49.99,
+  }
+
+  return await ProductService.createProduct(product)
+}
+createProduct()
+
+const existingProductId = product._id
+  
+async function createOrderLine() {
+  const orderLine = new OrderLine({
+    productId: existingProductId,
+    quantity: 4,
+    price: 2.99,
+  })
+  return await OrderLineService.createOrderLine(orderLine)
+}
+
+describe('orderLine service', () => {
+  let mongodHelper: MongodHelper
+
+  beforeAll(async () => {
+    mongodHelper = await connect()
+  })
+
+  afterEach(async () => {
+    await mongodHelper.clearDatabase()
+  })
+
+  afterAll(async () => {
+    await mongodHelper.closeDatabase()
+  })
+
+  it('should create a orderLine', async () => {
+    const orderLine = await createOrderLine()
+    expect(orderLine).toHaveProperty('_id', orderLine._id)
+    expect(orderLine).toHaveProperty('productId', existingProductId)
+    expect(orderLine).toHaveProperty('quantity', 4)
+    expect(orderLine).toHaveProperty('price', 2.99)
+  })
+
+  it('should get a orderLine with id', async () => {
+    const orderLine = await createOrderLine()
+    const found = await OrderLineService.findById(orderLine._id)
+    expect(found._id).toEqual(orderLine._id)
+    expect(found.productId).toEqual(orderLine.productId)
+
+  })
+
+  // Check https://jestjs.io/docs/en/asynchronous for more info about
+  // how to test async code, especially with error
+  it('should not get a non-existing orderLine', async () => {
+    expect.assertions(1)
+    return OrderLineService.findById(nonExistingOrderLineId).catch((e) => {
+      expect(e.message).toMatch(`OrderLine ${nonExistingOrderLineId} not found`)
+    })
+  })
+
+  it('should update an existing orderLine', async () => {
+    const orderLine = await createOrderLine()
+    const update = {
+      productId: 'Some Other Id'
+    }
+    const updated = await OrderLineService.updateById(orderLine._id, update)
+    expect(updated).toHaveProperty('_id', orderLine._id)
+    expect(orderLine).toHaveProperty('productId', update.productId)
+  })
+
+  it('should not update a non-existing orderLine', async () => {
+    expect.assertions(1)
+    const update = {
+      quantity:123
+    }
+
+    return OrderLineService.updateById(nonExistingOrderLineId, update).catch(
+      (e) => {
+        expect(e.message).toMatch(`OrderLine ${nonExistingOrderLineId} not found`)
+      }
+    )
+  })
+
+  it('should delete an existing orderLine', async () => {
+    expect.assertions(1)
+    const orderLine = await createOrderLine()
+    await OrderLineService.deleteById(orderLine._id)
+    return OrderLineService.findById(orderLine._id).catch((e) => {
+      expect(e.message).toBe(`OrderLine ${orderLine._id} not found`)
+    })
+  })
+})

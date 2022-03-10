@@ -14,7 +14,7 @@ export const createOrderLine = async (
     const { quantity, price } = req.body
 
     const orderLine = new OrderLine({
-      productId: req.params.productId,
+      orderLineId: req.params.orderLineId,
       quantity,
       price,
     })
@@ -39,6 +39,59 @@ export const findOrderLines = async (
 ) => {
   try {
     res.json(await OrderLineService.findOrderLines())
+  } catch (error) {
+    if (error instanceof Error && error.name == 'ValidationError') {
+      next(new BadRequestError('Invalid Request', error))
+    } else {
+      next(error)
+    }
+  }
+}
+
+// GET /orderLine by ID
+export const findOrderLineById = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    res.json(await OrderLineService.findById(req.params.orderLineId))
+  } catch (error) {
+    if (error instanceof Error && error.name == 'ValidationError') {
+      next(new BadRequestError('Invalid Request', error))
+    } else {
+      next(error)
+    }
+  }
+}
+
+// PUT /:orderLineId
+export const updateOrderLineById = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    res.json(
+      await OrderLineService.updateById(req.params.orderLineId, req.body)
+    )
+  } catch (error) {
+    if (error instanceof Error && error.name == 'ValidationError') {
+      next(new BadRequestError('Invalid Request', error))
+    } else {
+      next(error)
+    }
+  }
+}
+
+// DELETE /:orderLineId
+export const deleteOrderLineById = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    res.json(await OrderLineService.deleteById(req.params.orderLineId))
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {
       next(new BadRequestError('Invalid Request', error))

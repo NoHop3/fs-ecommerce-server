@@ -49,16 +49,59 @@ export const findOrdersForUserId = async (
   }
 }
 
-// GET /orders
-export const findOrders = async (
+// GET /order by ID
+export const findOrderById = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    res.json(await OrderService.findOrders())
+    res.json(
+      await OrderService.findOrderById(req.params.userId, req.params.orderId)
+    )
   } catch (error) {
-    console.log(error)
+    if (error instanceof Error && error.name == 'ValidationError') {
+      next(new BadRequestError('Invalid Request', error))
+    } else {
+      next(error)
+    }
+  }
+}
+
+// PUT /:orderId
+export const updateOrderById = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    res.json(
+      await OrderService.updateOrderById(
+        req.params.userId,
+        req.params.orderId,
+        req.body
+      )
+    )
+  } catch (error) {
+    if (error instanceof Error && error.name == 'ValidationError') {
+      next(new BadRequestError('Invalid Request', error))
+    } else {
+      next(error)
+    }
+  }
+}
+
+// DELETE /:orderId
+export const deleteOrderById = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    res.json(
+      await OrderService.deleteOrderById(req.params.userId, req.params.orderId)
+    )
+  } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {
       next(new BadRequestError('Invalid Request', error))
     } else {

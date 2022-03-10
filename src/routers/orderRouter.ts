@@ -1,14 +1,18 @@
 import { Router } from 'express'
 import {
-  findOrders,
   createOrder,
+  deleteOrderById,
+  findOrderById,
   findOrdersForUserId,
+  updateOrderById,
 } from '../controllers/orderController'
 
 const router = Router()
 
 router.post('/:userId', createOrder)
 router.get('/:userId', findOrdersForUserId)
-router.get('/', findOrders)
+router.get('/:userId/:orderId', findOrderById)
+router.put('/:userId/:orderId', updateOrderById)
+router.delete('/:userId/:orderId', deleteOrderById)
 
 export default router
