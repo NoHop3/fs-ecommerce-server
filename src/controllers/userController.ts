@@ -13,6 +13,10 @@ export const createUser = async (
   try {
     const { email, username, password, firstName, lastName, image } = req.body
 
+    const checkIfExists = await UserService.checkIfExists(email, username)
+    if (checkIfExists)
+      return res.status(400).json({ error: 'User already in database.' })
+
     const user = new User({
       email,
       username,

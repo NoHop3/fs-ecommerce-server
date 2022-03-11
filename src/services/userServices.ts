@@ -2,6 +2,19 @@ import { NotFoundError } from '../helpers/apiError'
 import User, { UserDocument } from '../models/User'
 // import { NotFoundError } from '../helpers/apiError'
 
+// Checks
+
+const checkIfExists = async (
+  email: string,
+  username: string
+): Promise<UserDocument | null> => {
+  const emailInDb = await User.findOne({ email: email })
+  if (emailInDb) return emailInDb
+  const usernameInDb = await User.findOne({ username: username })
+  if (usernameInDb) return usernameInDb
+  return null
+}
+
 const createUser = async (user: UserDocument): Promise<UserDocument> => {
   return user.save()
 }
@@ -44,4 +57,5 @@ export default {
   findById,
   updateById,
   deleteById,
+  checkIfExists,
 }
