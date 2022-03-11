@@ -23,7 +23,7 @@ const updateById = async (
   orderLineId: string,
   propsToUpdate: Partial<OrderLineDocument>
 ): Promise<OrderLineDocument | null> => {
-  const orderLineToUpdate = OrderLine.findByIdAndUpdate(
+  const orderLineToUpdate = await OrderLine.findByIdAndUpdate(
     orderLineId,
     propsToUpdate,
     {
@@ -36,14 +36,11 @@ const updateById = async (
   return orderLineToUpdate
 }
 
-const deleteById = async (
-  orderLineId: string
-): Promise<OrderLineDocument | null> => {
-  const orderLineToDelete = OrderLine.findByIdAndDelete(orderLineId)
+const deleteById = async (orderLineId: string): Promise<void> => {
+  const orderLineToDelete = await OrderLine.findByIdAndDelete(orderLineId)
   if (!orderLineToDelete) {
     throw new NotFoundError(`OrderLine ${orderLineId} not found`)
   }
-  return orderLineToDelete
 }
 
 export default {

@@ -98,9 +98,8 @@ export const deleteOrderById = async (
   next: NextFunction
 ) => {
   try {
-    res.json(
-      await OrderService.deleteOrderById(req.params.userId, req.params.orderId)
-    )
+    await OrderService.deleteOrderById(req.params.userId, req.params.orderId)
+    res.status(204).end()
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {
       next(new BadRequestError('Invalid Request', error))

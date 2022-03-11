@@ -40,8 +40,8 @@ describe('user controller', () => {
   it('should create a user', async () => {
     const res = await createUser()
     expect(res.status).toBe(200)
-    expect(res.body.email).toEqual('r_georgie@gmail.com')
-    expect(res.body.username).toEqual('Rgeorgo')
+    expect(res.body.email).toEqual('r_geo@gmail.com')
+    expect(res.body.username).toEqual('Rgeor')
   })
 
   it('should not create a user with wrong data', async () => {
@@ -49,9 +49,9 @@ describe('user controller', () => {
       password: '12344321',
       firstName: 'Rafael',
       lastName: 'Georgio',
+      username: 'Rgeor'
       // These fields should be included
       // email: 'r_geo@gmail.com',
-      // username: 'Rgeor',
     })
     expect(res.status).toBe(400)
   })
@@ -71,10 +71,10 @@ describe('user controller', () => {
     expect(res.status).toBe(404)
   })
 
-  it('should get back all user', async () => {
+  it('should get back all users', async () => {
     const res1 = await createUser({
-      email: 'r_geo@gmail.com',
-      username: 'Rgeor',
+      email: 'r_geogie@gmail.com',
+      username: 'Rgeorgie',
     })
     const res2 = await createUser({
       email: 'r_geo2@gmail.com',
@@ -84,8 +84,8 @@ describe('user controller', () => {
     const res3 = await request(app).get('/api/v1/users')
 
     expect(res3.body.length).toEqual(2)
-    expect(res3.body[0]._id).toEqual(res1.body._id)
-    expect(res3.body[1]._id).toEqual(res2.body._id)
+    expect(res3.body[1]._id).toEqual(res1.body._id)
+    expect(res3.body[2]._id).toEqual(res2.body._id)
   })
 
   it('should update an existing user', async () => {

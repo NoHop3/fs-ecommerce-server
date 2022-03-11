@@ -4,7 +4,7 @@ import { NotFoundError } from '../helpers/apiError'
 const createProduct = async (
   product: ProductDocument
 ): Promise<ProductDocument> => {
-  return product.save()
+  return await product.save()
 }
 
 const findProducts = async (): Promise<ProductDocument[]> => {
@@ -23,23 +23,24 @@ const updateById = async (
   productId: string,
   propsToUpdate: Partial<ProductDocument>
 ): Promise<ProductDocument | null> => {
-  const productToUpdate = Product.findByIdAndUpdate(productId, propsToUpdate, {
-    new: true,
-  })
+  const productToUpdate = await Product.findByIdAndUpdate(
+    productId,
+    propsToUpdate,
+    {
+      new: true,
+    }
+  )
   if (!productToUpdate) {
     throw new NotFoundError(`Product ${productId} not found`)
   }
   return productToUpdate
 }
 
-const deleteById = async (
-  productId: string
-): Promise<ProductDocument | null> => {
-  const productToDelete = Product.findByIdAndDelete(productId)
+const deleteById = async (productId: string): Promise<void> => {
+  const productToDelete = await Product.findByIdAndDelete(productId)
   if (!productToDelete) {
     throw new NotFoundError(`Product ${productId} not found`)
   }
-  return productToDelete
 }
 
 export default {

@@ -1,28 +1,13 @@
 import OrderLine from '../../src/models/OrderLine'
 import OrderLineService from '../../src/services/orderLineServices'
-import ProductService from '../../src/services/productServices'
 import connect, { MongodHelper } from '../db-helper'
 
 const nonExistingOrderLineId = '5e57b77b5744fa0b461c7906'
 
 //! Insert existing productId in order to test or create a product here
-let product
-
-async function createProduct() {
-  product = {
-    name: 'Example Product X',
-    image: 'http://something.com',
-    category: 'Hookahs',
-    color: 'Deep Blue Fade',
-    price: 49.99,
-  }
-
-  return await ProductService.createProduct(product)
-}
-createProduct()
-
-const existingProductId = product._id
   
+const existingProductId = '5e57b77b5744fa0b461c7906'
+
 async function createOrderLine() {
   const orderLine = new OrderLine({
     productId: existingProductId,
@@ -49,10 +34,10 @@ describe('orderLine service', () => {
 
   it('should create a orderLine', async () => {
     const orderLine = await createOrderLine()
-    expect(orderLine).toHaveProperty('_id', orderLine._id)
-    expect(orderLine).toHaveProperty('productId', existingProductId)
-    expect(orderLine).toHaveProperty('quantity', 4)
-    expect(orderLine).toHaveProperty('price', 2.99)
+    expect(orderLine).toHaveProperty('_id')
+    expect(orderLine).toHaveProperty('productId')
+    expect(orderLine).toHaveProperty('quantity')
+    expect(orderLine).toHaveProperty('price')
   })
 
   it('should get a orderLine with id', async () => {
@@ -75,11 +60,11 @@ describe('orderLine service', () => {
   it('should update an existing orderLine', async () => {
     const orderLine = await createOrderLine()
     const update = {
-      productId: 'Some Other Id'
+      price: 1.99
     }
     const updated = await OrderLineService.updateById(orderLine._id, update)
     expect(updated).toHaveProperty('_id', orderLine._id)
-    expect(orderLine).toHaveProperty('productId', update.productId)
+    expect(orderLine).toHaveProperty('price', update.price)
   })
 
   it('should not update a non-existing orderLine', async () => {
@@ -88,7 +73,7 @@ describe('orderLine service', () => {
       quantity:123
     }
 
-    return OrderLineService.updateById(nonExistingOrderLineId, update).catch(
+    return await OrderLineService.updateById(nonExistingOrderLineId, update).catch(
       (e) => {
         expect(e.message).toMatch(`OrderLine ${nonExistingOrderLineId} not found`)
       }

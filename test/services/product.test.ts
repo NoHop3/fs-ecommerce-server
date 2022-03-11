@@ -62,6 +62,7 @@ describe('product service', () => {
       color: 'Deep Blue Fade',
       price: 49.99,
     }
+    expect.assertions(1)
     const updated = await ProductService.updateById(product._id, update)
     expect(updated).toHaveProperty('_id', product._id)
     expect(product).toHaveProperty('name', 'Example Product Updated')
@@ -78,7 +79,7 @@ describe('product service', () => {
       price: 49.99,
     }
 
-    return ProductService.updateById(nonExistingProductId, update).catch((e) => {
+    return await ProductService.updateById(nonExistingProductId, update).catch((e) => {
       expect(e.message).toMatch(`Product ${nonExistingProductId} not found`)
     })
   })

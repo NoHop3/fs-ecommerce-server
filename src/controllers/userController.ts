@@ -28,7 +28,7 @@ export const createUser = async (
     await UserService.createUser(user)
     res.json(user)
   } catch (error) {
-    console.log(error)
+    // console.log(error)
     if (error instanceof Error && error.name == 'ValidationError') {
       next(new BadRequestError('Invalid Request', error))
     } else {
@@ -92,7 +92,8 @@ export const deleteById = async (
   next: NextFunction
 ) => {
   try {
-    res.json(await UserService.deleteById(req.params.userId))
+    await UserService.deleteById(req.params.userId)
+    res.status(204).end()
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {
       next(new BadRequestError('Invalid Request', error))

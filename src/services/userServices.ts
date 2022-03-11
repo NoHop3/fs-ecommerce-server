@@ -31,12 +31,11 @@ const updateById = async (
   return userToUpd
 }
 
-const deleteById = async (userId: string): Promise<UserDocument | null> => {
-  const userToDelete = User.findByIdAndDelete(userId)
+const deleteById = async (userId: string): Promise<void> => {
+  const userToDelete = await User.findByIdAndDelete(userId)
   if (!userToDelete) {
     throw new NotFoundError(`User ${userId} not found`)
   }
-  return userToDelete
 }
 
 export default {

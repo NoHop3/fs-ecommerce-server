@@ -1,6 +1,13 @@
 /* eslint-disable @typescript-eslint/member-delimiter-style */
 import mongoose, { Document } from 'mongoose'
 
+export type Order = {
+  orderId: string
+}
+export type Product = {
+  productId: string
+}
+
 export type UserDocument = Document & {
   email: string
   username: string
@@ -9,8 +16,8 @@ export type UserDocument = Document & {
   lastName: string
   isAdmin: boolean
   hasWriteAccess: boolean
-  orders: []
-  favourites: []
+  orders: Order[]
+  favourites: Product[]
 }
 
 const userSchema = new mongoose.Schema({

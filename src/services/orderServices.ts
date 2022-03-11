@@ -1,5 +1,5 @@
 import Order, { OrderDocument } from '../models/Order'
-import { NotFoundError } from '../helpers/apiError'
+import { BadRequestError, NotFoundError } from '../helpers/apiError'
 
 const createOrder = async (order: OrderDocument): Promise<OrderDocument> => {
   return await order.save()
@@ -28,10 +28,17 @@ const findOrderById = async (
   userId: string,
   orderId: string
 ): Promise<OrderDocument> => {
-  const orderToReturn = await Order.findOne({ _id: orderId, userId: userId })
+  const orderToReturn = await Order.findById(orderId)
   if (!orderToReturn) {
     throw new NotFoundError(`Order ${orderId} not found`)
   }
+  if (orderToReturn.userId !== userId) {
+    console.log(userId + '<-->' + orderToReturn.userId)
+    throw new BadRequestError(
+      `Order ${orderId} is not made by this user ${userId}`
+    )
+  }
+
   return orderToReturn
 }
 
@@ -55,11 +62,9 @@ const updateOrderById = async (
 const deleteOrderById = async (
   userId: string,
   orderId: string
-): Promise<OrderDocument | null> => {
+): Promise<void> => {
   const IsOrderMadeBy = await findOrderById(userId, orderId)
-  const orderToDelete = await Order.findByIdAndDelete(IsOrderMadeBy._id)
-
-  return orderToDelete
+  await Order.findByIdAndDelete(IsOrderMadeBy._id)
 }
 
 export default {

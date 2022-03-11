@@ -1,9 +1,13 @@
 /* eslint-disable @typescript-eslint/member-delimiter-style */
 import mongoose, { Document } from 'mongoose'
 
+export type OrderLine = {
+  _id: string
+}
+
 export type OrderDocument = Document & {
   userId: string
-  orderLines: []
+  orderLines: OrderLine[]
   totalPrice: number
 }
 

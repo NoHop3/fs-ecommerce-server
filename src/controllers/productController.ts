@@ -23,7 +23,7 @@ export const createProduct = async (
     await ProductService.createProduct(product)
     res.json(product)
   } catch (error) {
-    console.log(error)
+    // console.log(error)
     if (error instanceof Error && error.name == 'ValidationError') {
       next(new BadRequestError('Invalid Request', error))
     } else {
@@ -90,7 +90,8 @@ export const deleteProductById = async (
   next: NextFunction
 ) => {
   try {
-    res.json(await ProductService.deleteById(req.params.productId))
+    await ProductService.deleteById(req.params.productId)
+    res.status(204).end()
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {
       next(new BadRequestError('Invalid Request', error))

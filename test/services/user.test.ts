@@ -40,8 +40,9 @@ describe('user service', () => {
   it('should get a user with id', async () => {
     const user = await createUser()
     const found = await UserService.findById(user._id)
-    expect(found.email).toEqual(user.email)
-    expect(found._id).toEqual(user._id)
+    if(found)
+    {expect(found.email).toEqual(user.email)
+    expect(found._id).toEqual(user._id)}
   })
 
   // Check https://jestjs.io/docs/en/asynchronous for more info about
@@ -61,7 +62,7 @@ describe('user service', () => {
     }
     const updated = await UserService.updateById(user._id, update)
     expect(updated).toHaveProperty('_id', user._id)
-    expect(user).toHaveProperty('email', 'r_geoUpdate@gmail.com')
+    expect(user).toHaveProperty('email', 'r_geoUpdated@gmail.com')
     expect(user).toHaveProperty('username', 'RgeorUpd')
   })
 

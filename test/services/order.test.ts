@@ -1,57 +1,12 @@
-import OrderLine from '../../src/models/OrderLine'
 import Order from '../../src/models/Order'
-import User from '../../src/models/User'
-import OrderLineService from '../../src/services/orderLineServices'
 import OrderService from '../../src/services/orderServices'
-import UserService from '../../src/services/userServices'
-import ProductService from '../../src/services/productServices'
 import connect, { MongodHelper } from '../db-helper'
 
 const nonExistingOrderId = '5e57b77b5744fa0b461c7906'
+const nonExistingUserId = '5e57b77b5744fa0b461c7906'
+const existingUserId = '6229f9524f07b73d003e72f4'
+const existingOrderLineId = '6229f8df4f07b73d003e72eb'
 
-let product
-let orderLine
-let user
-
-async function createUser() {
-  user = new User({
-    email: 'r_geo@gmail.com',
-    username: 'Rgeor',
-    password: '12344321',
-    firstName: 'Rafael',
-    lastName: 'Georgio',
-  })
-  return await UserService.createUser(user)
-}
-createUser()
-const existingUserId = user._id
-
-async function createProduct() {
-  product = {
-    name: 'Example Product X',
-    image: 'http://something.com',
-    category: 'Hookahs',
-    color: 'Deep Blue Fade',
-    price: 49.99,
-  }
-
-  return await ProductService.createProduct(product)
-}
-createProduct()
-
-const existingProductId = product._id
-
-async function createOrderLine() {
-  orderLine = new OrderLine({
-    productId: existingProductId,
-    quantity: 4,
-    price: 2.99,
-  })
-  return await OrderLineService.createOrderLine(orderLine)
-}
-createOrderLine()
-
-const existingOrderLineId = orderLine._id
 
 async function createOrder() {
   const order = new Order({
@@ -82,9 +37,9 @@ describe('order service', () => {
 
   it('should create a order', async () => {
     const order = await createOrder()
-    expect(order).toHaveProperty('_id', order._id)
-    expect(order).toHaveProperty('userId', existingUserId)
-    expect(order).toHaveProperty('totalPrice', 1233.0)
+    expect(order).toHaveProperty('_id')
+    expect(order).toHaveProperty('userId')
+    expect(order).toHaveProperty('totalPrice')
   })
 
   it('should get a order with id', async () => {
@@ -98,9 +53,18 @@ describe('order service', () => {
   // how to test async code, especially with error
   it('should not get a non-existing order', async () => {
     expect.assertions(1)
-    return OrderService.findOrderById(existingUserId, nonExistingOrderId).catch((e) => {
+    return await OrderService.findOrderById(existingUserId, nonExistingOrderId).catch((e) => {
       expect(e.message).toMatch(`Order ${nonExistingOrderId} not found`)
     })
+  })
+
+  it('should not get a existing order with non-existing user', async () => {
+    const order = await createOrder()
+    return await OrderService.findOrderById(nonExistingUserId, order._id).catch(
+      (e) => {
+        expect(e.message).toMatch(`Order ${order._id} is not made by this user ${nonExistingUserId}`)
+      }
+    )
   })
 
   it('should update an existing order', async () => {
@@ -133,11 +97,24 @@ describe('order service', () => {
     )
   })
 
+  it('should not update a existing order with non-existing user', async () => {
+    const order = await createOrder()
+    const update = {
+      totalPrice: 9999,
+    }
+    return OrderService.updateOrderById(
+      nonExistingUserId,
+      order._id,
+      update
+    ).catch((e) => {
+      expect(e.message).toMatch(`Order ${order._id} is not made by this user ${nonExistingUserId}`)
+    })
+  })
+
   it('should delete an existing order', async () => {
-    expect.assertions(1)
     const order = await createOrder()
     await OrderService.deleteOrderById(existingUserId, order._id)
-    return OrderService.findOrderById(existingUserId, order._id).catch((e) => {
+    return await OrderService.findOrderById(existingUserId, order._id).catch((e) => {
       expect(e.message).toBe(`Order ${order._id} not found`)
     })
   })
