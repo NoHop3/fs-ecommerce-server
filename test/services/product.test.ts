@@ -62,11 +62,10 @@ describe('product service', () => {
       color: 'Deep Blue Fade',
       price: 49.99,
     }
-    expect.assertions(1)
     const updated = await ProductService.updateById(product._id, update)
     expect(updated).toHaveProperty('_id', product._id)
-    expect(product).toHaveProperty('name', 'Example Product Updated')
-    expect(product).toHaveProperty('image', 'http://somethingUpdated.com')
+    expect(updated).toHaveProperty('name', 'Example Product Updated')
+    expect(updated).toHaveProperty('image', 'http://somethingUpdated.com')
   })
 
   it('should not update a non-existing product', async () => {
@@ -90,6 +89,12 @@ describe('product service', () => {
     await ProductService.deleteById(product._id)
     return ProductService.findById(product._id).catch((e) => {
       expect(e.message).toBe(`Product ${product._id} not found`)
+    })
+  })
+  it('should not delete a non-existing product', async () => {
+    expect.assertions(1)
+    return await ProductService.deleteById(nonExistingProductId).catch((e) => {
+      expect(e.message).toBe(`Product ${nonExistingProductId} not found`)
     })
   })
 })

@@ -11,7 +11,7 @@ export const createUser = async (
   next: NextFunction
 ) => {
   try {
-    const { email, username, password, firstName, lastName } = req.body
+    const { email, username, password, firstName, lastName, image } = req.body
 
     const user = new User({
       email,
@@ -19,6 +19,7 @@ export const createUser = async (
       password,
       firstName,
       lastName,
+      image,
       isAdmin: false,
       hasWriteAccess: false,
       orders: [],
@@ -28,7 +29,6 @@ export const createUser = async (
     await UserService.createUser(user)
     res.json(user)
   } catch (error) {
-    // console.log(error)
     if (error instanceof Error && error.name == 'ValidationError') {
       next(new BadRequestError('Invalid Request', error))
     } else {
@@ -76,7 +76,11 @@ export const updateById = async (
   next: NextFunction
 ) => {
   try {
-    res.json(await UserService.updateById(req.params.userId, req.body))
+    const updatedUser = await UserService.updateById(
+      req.params.userId,
+      req.body
+    )
+    res.json(updatedUser)
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {
       next(new BadRequestError('Invalid Request', error))

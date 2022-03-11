@@ -72,9 +72,11 @@ export const updateOrderLineById = async (
   next: NextFunction
 ) => {
   try {
-    res.json(
-      await OrderLineService.updateById(req.params.orderLineId, req.body)
+    const updatedOrderLine = await OrderLineService.updateById(
+      req.params.orderLineId,
+      req.body
     )
+    res.json(updatedOrderLine)
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {
       next(new BadRequestError('Invalid Request', error))

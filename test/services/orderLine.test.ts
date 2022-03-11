@@ -64,7 +64,7 @@ describe('orderLine service', () => {
     }
     const updated = await OrderLineService.updateById(orderLine._id, update)
     expect(updated).toHaveProperty('_id', orderLine._id)
-    expect(orderLine).toHaveProperty('price', update.price)
+    expect(updated).toHaveProperty('price', update.price)
   })
 
   it('should not update a non-existing orderLine', async () => {
@@ -84,8 +84,15 @@ describe('orderLine service', () => {
     expect.assertions(1)
     const orderLine = await createOrderLine()
     await OrderLineService.deleteById(orderLine._id)
-    return OrderLineService.findById(orderLine._id).catch((e) => {
+    return await OrderLineService.findById(orderLine._id).catch((e) => {
       expect(e.message).toBe(`OrderLine ${orderLine._id} not found`)
+    })
+  })
+
+  it('should not delete a non-existing orderLine', async () => {
+    expect.assertions(1)
+    return await OrderLineService.deleteById(nonExistingOrderLineId).catch((e) => {
+      expect(e.message).toBe(`OrderLine ${nonExistingOrderLineId} not found`)
     })
   })
 })

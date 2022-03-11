@@ -5,7 +5,7 @@ POST http://localhost:5000/api/v1/users
 Content-Type: application/json
 
 {
-  "email":"r_geo@gmail.com",
+  "email":"r_geo3@gmail.com",
   "username": "Rgeor",
   "password": "12344321",
   "firstName": "Rafael",

@@ -73,19 +73,23 @@ describe('user controller', () => {
 
   it('should get back all users', async () => {
     const res1 = await createUser({
-      email: 'r_geogie@gmail.com',
-      username: 'Rgeorgie',
+      email: 'r_geo1@gmail.com',
+      username: 'Rgeor1',
+      password: '12344321',
+      firstName: 'Rafael1',
+      lastName: 'Georgio1',
     })
     const res2 = await createUser({
       email: 'r_geo2@gmail.com',
       username: 'Rgeor2',
+      password: '12344321',
+      firstName: 'Rafael2',
+      lastName: 'Georgio2',
     })
-
     const res3 = await request(app).get('/api/v1/users')
-
     expect(res3.body.length).toEqual(2)
-    expect(res3.body[1]._id).toEqual(res1.body._id)
-    expect(res3.body[2]._id).toEqual(res2.body._id)
+    expect(res3.body[0]._id).toEqual(res1.body._id)
+    expect(res3.body[1]._id).toEqual(res2.body._id)
   })
 
   it('should update an existing user', async () => {

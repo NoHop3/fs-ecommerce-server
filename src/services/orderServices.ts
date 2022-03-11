@@ -32,8 +32,8 @@ const findOrderById = async (
   if (!orderToReturn) {
     throw new NotFoundError(`Order ${orderId} not found`)
   }
-  if (orderToReturn.userId !== userId) {
-    console.log(userId + '<-->' + orderToReturn.userId)
+  if (orderToReturn.userId != userId) {
+    // console.log(userId + '<-->' + orderToReturn.userId)
     throw new BadRequestError(
       `Order ${orderId} is not made by this user ${userId}`
     )

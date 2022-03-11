@@ -14,6 +14,7 @@ export type UserDocument = Document & {
   password: string
   firstName: string
   lastName: string
+  image?: string
   isAdmin: boolean
   hasWriteAccess: boolean
   orders: Order[]
@@ -26,6 +27,7 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true },
   firstName: { type: String },
   lastName: { type: String },
+  image: { type: String },
   isAdmin: { type: Boolean },
   hasWriteAccess: { type: Boolean },
   orders: [

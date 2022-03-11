@@ -73,7 +73,11 @@ export const updateProductById = async (
   next: NextFunction
 ) => {
   try {
-    res.json(await ProductService.updateById(req.params.productId, req.body))
+    const updatedProduct = await ProductService.updateById(
+      req.params.productId,
+      req.body
+    )
+    res.json(updatedProduct)
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {
       next(new BadRequestError('Invalid Request', error))

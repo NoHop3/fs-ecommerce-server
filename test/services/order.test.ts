@@ -70,7 +70,6 @@ describe('order service', () => {
   it('should update an existing order', async () => {
     const order = await createOrder()
     const update = {
-      userId: 'Some Other Id',
       totalPrice: 123421,
     }
     const updated = await OrderService.updateOrderById(
@@ -79,7 +78,7 @@ describe('order service', () => {
       update
     )
     expect(updated).toHaveProperty('_id', order._id)
-    expect(order).toHaveProperty('userId', update.userId)
+    expect(updated).toHaveProperty('totalPrice', 123421)
   })
 
   it('should not update a non-existing order', async () => {
@@ -118,4 +117,13 @@ describe('order service', () => {
       expect(e.message).toBe(`Order ${order._id} not found`)
     })
   })
+
+  // it('should not delete an non-existing order', async () => {
+    
+  //   return await OrderService.deleteOrderById(existingUserId, nonExistingOrderId).catch(
+  //     (e) => {
+  //       expect(e.message).toBe(`Order ${nonExistingOrderId} not found`)
+  //     }
+  //   )
+  // })
 })

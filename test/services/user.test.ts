@@ -62,8 +62,8 @@ describe('user service', () => {
     }
     const updated = await UserService.updateById(user._id, update)
     expect(updated).toHaveProperty('_id', user._id)
-    expect(user).toHaveProperty('email', 'r_geoUpdated@gmail.com')
-    expect(user).toHaveProperty('username', 'RgeorUpd')
+    expect(updated).toHaveProperty('email', 'r_geoUpdated@gmail.com')
+    expect(updated).toHaveProperty('username', 'RgeorUpd')
   })
 
   it('should not update a non-existing user', async () => {
@@ -85,6 +85,13 @@ describe('user service', () => {
     await UserService.deleteById(user._id)
     return UserService.findById(user._id).catch((e) => {
       expect(e.message).toBe(`User ${user._id} not found`)
+    })
+  })
+
+  it('should not delete a non-existing user', async() => {
+    expect.assertions(1)
+    return await UserService.deleteById(nonExistingUserId).catch((e) => {
+      expect(e.message).toBe(`User ${nonExistingUserId} not found`)
     })
   })
 })

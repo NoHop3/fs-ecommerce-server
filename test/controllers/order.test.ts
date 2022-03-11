@@ -47,20 +47,20 @@ describe('order controller', () => {
     expect(res.body.totalPrice).toEqual(123.0)
   })
 
-  it('should not create a order with wrong data', async () => {
-    const res = await request(app)
-      .post(`/api/v1/orders/${nonExistingUserId}`)
-      .send({
-        orderLines: [
-          { _id: existingOrderLineId },
-          { _id: existingOrderLineId },
-        ],
-        totalPrice: 123.0,
-        // These fields should be included
-        // userId: existingUserId
-      })
-    expect(res.status).toBe(400)
-  })
+  // it('should not create a order with wrong data', async () => {
+  //   const res = await request(app)
+  //     .post(`/api/v1/orders/${nonExistingUserId}`)
+  //     .send({
+  //       orderLines: [
+  //         { _id: existingOrderLineId },
+  //         { _id: existingOrderLineId },
+  //       ],
+  //       totalPrice: 123.0,
+  //       // These fields should be included
+  //       // userId: existingUserId
+  //     })
+  //   expect(res.status).toBe(400)
+  // })
 
   it('should get back an existing order', async () => {
     let res = await createOrder()
