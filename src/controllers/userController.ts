@@ -52,7 +52,6 @@ export const loginUser = async (
 ) => {
   try {
     const { email, username, password } = req.body
-    console.log()
     const loginUser = await UserService.checkIfExists(email, username)
     if (loginUser) {
       const isCorrectPassword = await bcrypt.compare(

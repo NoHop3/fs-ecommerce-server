@@ -5,8 +5,8 @@ POST http://localhost:5000/api/v1/users
 Content-Type: application/json
 
 {
-  "email":"r_geo6@gmail.com",
-  "username": "Rgeor6",
+  "email":"test_email@gmail.com",
+  "username": "TestUsername",
   "password": "12344321",
   "firstName": "Rafael",
   "lastName": "Georgio"
@@ -18,7 +18,7 @@ POST http://localhost:5000/api/v1/users/login HTTP/1.1
 Content-Type: application/json
 
 {
-  "email":"r_geo5@gmail.com",
+  "email":"test_email@gmail.com",
   "password": "12344321"
 }
 

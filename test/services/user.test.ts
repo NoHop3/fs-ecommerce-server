@@ -44,6 +44,22 @@ describe('user service', () => {
     {expect(found.email).toEqual(user.email)
     expect(found._id).toEqual(user._id)}
   })
+  it('should get a user with passed email', async() => {
+    const user = await createUser()
+    const found = await UserService.checkIfExists(user.email)
+    if (found) {
+      expect(found.email).toEqual(user.email)
+      expect(found._id).toEqual(user._id)
+    }
+  })
+  it('should get a user with passed username', async() => {
+    const user = await createUser()
+    const found = await UserService.checkIfExists(user.username)
+    if (found) {
+      expect(found.username).toEqual(user.username)
+      expect(found._id).toEqual(user._id)
+    }
+  })
 
   // Check https://jestjs.io/docs/en/asynchronous for more info about
   // how to test async code, especially with error
