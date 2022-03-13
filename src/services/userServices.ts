@@ -5,8 +5,8 @@ import User, { UserDocument } from '../models/User'
 // Checks
 
 const checkIfExists = async (
-  email: string,
-  username: string
+  email?: string,
+  username?: string
 ): Promise<UserDocument | null> => {
   const emailInDb = await User.findOne({ email: email })
   if (emailInDb) return emailInDb
@@ -20,11 +20,11 @@ const createUser = async (user: UserDocument): Promise<UserDocument> => {
 }
 
 const findUsers = async (): Promise<UserDocument[]> => {
-  return User.find().sort({ email: 1 })
+  return User.find().sort({ email: 1 }).select('-password')
 }
 
 const findById = async (userId: string): Promise<UserDocument | null> => {
-  const userToReturn = await User.findById(userId)
+  const userToReturn = await User.findById(userId).select('-password')
   if (!userToReturn) {
     throw new NotFoundError(`User ${userId} not found`)
   }

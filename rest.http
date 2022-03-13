@@ -5,15 +5,36 @@ POST http://localhost:5000/api/v1/users
 Content-Type: application/json
 
 {
-  "email":"r_geo4@gmail.com",
-  "username": "Rgeorg",
+  "email":"r_geo6@gmail.com",
+  "username": "Rgeor6",
   "password": "12344321",
   "firstName": "Rafael",
   "lastName": "Georgio"
 }
 
 ###
-GET http://localhost:5000/api/v1/users
+
+POST http://localhost:5000/api/v1/users/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "email":"r_geo5@gmail.com",
+  "password": "12344321"
+}
+
+###
+
+POST http://localhost:5000/api/v1/users/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "Rgeor6",
+  "password": "12344321"
+}
+
+###
+GET http://localhost:5000/api/v1/users HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjJiYjE2MDViODNhODBiMDBmMmJmMGIiLCJlbWFpbCI6InJfZ2VvNUBnbWFpbC5jb20iLCJ1c2VybmFtZSI6IlJnZW9yZ3NlIiwiaWF0IjoxNjQ3MTgxMDM0fQ.qZw4c00MCgJtSlFSBoOK2yxBB-apyyCQM6ASlaVMSss
 
 ########### Products ###############
 
