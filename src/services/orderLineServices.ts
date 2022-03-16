@@ -8,7 +8,7 @@ const createOrderLine = async (
 }
 
 const findOrderLines = async (): Promise<OrderLineDocument[]> => {
-  return OrderLine.find().sort({ productId: 1 }).populate('orderLineId')
+  return OrderLine.find().sort({ productId: 1 }).populate('productId')
 }
 
 const findById = async (orderLineId: string): Promise<OrderLineDocument> => {

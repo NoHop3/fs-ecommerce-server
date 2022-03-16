@@ -5,12 +5,15 @@ POST http://localhost:5000/api/v1/users
 Content-Type: application/json
 
 {
-  "email":"test_email@gmail.com",
-  "username": "TestUsername",
-  "password": "12344321",
-  "firstName": "Rafael",
-  "lastName": "Georgio"
+  "email": "u_sux@abv.bg",
+  "username": "asdasd",
+  "password": "233223",
+  "confirmPassword": "233232",
+  "firstName": "Stefan",
+  "lastName": "Georgiev",
+  "image": ""
 }
+
 
 ###
 
@@ -18,8 +21,8 @@ POST http://localhost:5000/api/v1/users/login HTTP/1.1
 Content-Type: application/json
 
 {
-  "email":"test_email@gmail.com",
-  "password": "12344321"
+  "email":"u_sux3@abv.bg",
+  "password": "233223"
 }
 
 ###
@@ -34,7 +37,7 @@ Content-Type: application/json
 
 ###
 GET http://localhost:5000/api/v1/users HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjJiYjE2MDViODNhODBiMDBmMmJmMGIiLCJlbWFpbCI6InJfZ2VvNUBnbWFpbC5jb20iLCJ1c2VybmFtZSI6IlJnZW9yZ3NlIiwiaWF0IjoxNjQ3MTgxMDM0fQ.qZw4c00MCgJtSlFSBoOK2yxBB-apyyCQM6ASlaVMSss
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjJlMGE1OTA0MmMxYTNlZDA3NjYxNGIiLCJlbWFpbCI6InRlc3RfZW1haWxAZ21haWwuY29tIiwidXNlcm5hbWUiOiJUZXN0VXNlcm5hbWUiLCJpYXQiOjE2NDc0NDY5MTAsImV4cCI6MTY0NzQ1MDUxMH0.LpLIpVdbrnlBZUmpp8S-bQQ3HYeQG5DS9Wkwimw9ia4
 
 ########### Products ###############
 

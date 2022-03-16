@@ -15,11 +15,7 @@ dotenv.config({ path: '.env' })
 const app = express()
 
 //Allow CORS access for PORT 5000
-const allowerdOrigins = [`hhtp://localhost:${process.env.PORT}`]
-const options: cors.CorsOptions = {
-  origin: allowerdOrigins,
-}
-app.use(cors(options))
+app.use(cors())
 
 // Express configuration
 app.use(apiContentType)
