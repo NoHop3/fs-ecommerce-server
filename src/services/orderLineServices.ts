@@ -1,14 +1,24 @@
 import OrderLine, { OrderLineDocument } from '../models/OrderLine'
-import { NotFoundError } from '../helpers/apiError'
+import { BadRequestError, NotFoundError } from '../helpers/apiError'
 
 const createOrderLine = async (
   orderLine: OrderLineDocument
 ): Promise<OrderLineDocument> => {
-  return orderLine.save()
+  const orderLineToReturn = await OrderLine.findOne({
+    productId: orderLine.productId,
+  })
+  if (orderLineToReturn) {
+    throw new BadRequestError(
+      `Such product ${orderLine.productId} has been already ordered!`
+    )
+  }
+  return await orderLine.save()
 }
 
-const findOrderLines = async (): Promise<OrderLineDocument[]> => {
-  return OrderLine.find().sort({ productId: 1 }).populate('productId')
+const findOrderLines = async (userId: string): Promise<OrderLineDocument[]> => {
+  return OrderLine.find({ userId: userId })
+    .sort({ productId: 1 })
+    .populate('productId')
 }
 
 const findById = async (orderLineId: string): Promise<OrderLineDocument> => {
@@ -38,9 +48,29 @@ const updateById = async (
 
 const deleteById = async (orderLineId: string): Promise<void> => {
   const orderLineToDelete = await OrderLine.findByIdAndDelete(orderLineId)
+  console.log(orderLineToDelete)
   if (!orderLineToDelete) {
     throw new NotFoundError(`OrderLine ${orderLineId} not found`)
   }
+}
+const deleteByProductId = async (
+  userId: string,
+  productId: string
+): Promise<void> => {
+  const orderLineToDelete = await OrderLine.find({
+    userId: userId,
+    productId: productId,
+  })
+  if (!orderLineToDelete) {
+    throw new NotFoundError(
+      `OrderLine containing this product ${productId} not found`
+    )
+  }
+  console.log(orderLineToDelete)
+  await OrderLine.deleteOne({
+    userId: userId,
+    productId: productId,
+  })
 }
 
 export default {
@@ -49,4 +79,5 @@ export default {
   findById,
   updateById,
   deleteById,
+  deleteByProductId,
 }

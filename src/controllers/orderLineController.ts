@@ -15,6 +15,7 @@ export const createOrderLine = async (
 
     const orderLine = new OrderLine({
       productId: req.params.productId,
+      userId: req.params.userId,
       quantity,
       price,
     })
@@ -38,7 +39,7 @@ export const findOrderLines = async (
   next: NextFunction
 ) => {
   try {
-    res.json(await OrderLineService.findOrderLines())
+    res.json(await OrderLineService.findOrderLines(req.params.userId))
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {
       next(new BadRequestError('Invalid Request', error))
@@ -99,6 +100,28 @@ export const deleteOrderLineById = async (
     if (error instanceof Error && error.name == 'ValidationError') {
       next(new BadRequestError('Invalid Request', error))
     } else {
+      next(error)
+    }
+  }
+}
+
+// DELETE /:productId
+export const deleteOrderLineByProductId = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    await OrderLineService.deleteByProductId(
+      req.params.userId,
+      req.params.productId
+    )
+    res.status(204).end()
+  } catch (error) {
+    if (error instanceof Error && error.name == 'ValidationError') {
+      next(new BadRequestError('Invalid Request', error))
+    } else {
+      console.log(error)
       next(error)
     }
   }

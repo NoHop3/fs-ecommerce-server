@@ -36,8 +36,16 @@ Content-Type: application/json
 }
 
 ###
+PUT http://localhost:5000/api/v1/users/623262833d7ee0211cabdf6a
+Content-Type: application/json
+
+{
+  "email": "nqkafdr@email.com"
+}
+
+###
 GET http://localhost:5000/api/v1/users HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjJlMGE1OTA0MmMxYTNlZDA3NjYxNGIiLCJlbWFpbCI6InRlc3RfZW1haWxAZ21haWwuY29tIiwidXNlcm5hbWUiOiJUZXN0VXNlcm5hbWUiLCJpYXQiOjE2NDc0NDY5MTAsImV4cCI6MTY0NzQ1MDUxMH0.LpLIpVdbrnlBZUmpp8S-bQQ3HYeQG5DS9Wkwimw9ia4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjMyMGQ1ODNkMTQ5NDQxYTQzMDM0ZjEiLCJlbWFpbCI6InVfc3V4M0BhYnYuYmciLCJ1c2VybmFtZSI6ImFzZGFzZDMiLCJpYXQiOjE2NDgwNzEwNzAsImV4cCI6MTY0ODA3NDY3MH0._Blx_wMjqPsKmHaHUlqCG9U4L_oE7IoeMn4Om_30DAQ
 
 ########### Products ###############
 
@@ -46,8 +54,9 @@ POST http://localhost:5000/api/v1/products
 Content-Type: application/json
 
 {
-  "name":"Sample Product3",
-  "image":"http://www.sample.com"
+  "name":"AMY SS14R - DRAGON EYES",
+  "image":"https://res.cloudinary.com/dtggdx3hc/image/upload/v1648048426/ss15_sort_1000x1000_fnmfr3.jpg",
+  "price":1299
 }
 
 ###
@@ -64,7 +73,7 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:5000/api/v1/orderLines/6229f8e74f07b73d003e72ed
+POST http://localhost:5000/api/v1/orderLines/623262833d7ee0211cabdf6a/623b39ba84b9baf1109053f7
 Content-Type: application/json
 
 {
@@ -73,7 +82,10 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:5000/api/v1/orderLines
+GET http://localhost:5000/api/v1/orderLines/62326179b9c85d3fc833d686
+
+###
+DELETE http://localhost:5000/api/v1/orderLines/62326179b9c85d3fc833d686/623b39e684b9baf1109053f8
 
 ########### Orders ###############
 
