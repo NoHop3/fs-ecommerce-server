@@ -21,7 +21,7 @@ export const createOrderLine = async (
     })
 
     await OrderLineService.createOrderLine(orderLine)
-    res.json(orderLine)
+    res.json(orderLine.populate('productId'))
   } catch (error) {
     // console.log(error)
     if (error instanceof Error && error.name == 'ValidationError') {
@@ -122,6 +122,24 @@ export const deleteOrderLineByProductId = async (
       next(new BadRequestError('Invalid Request', error))
     } else {
       console.log(error)
+      next(error)
+    }
+  }
+}
+
+export const deleteAllOrderLines = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    console.log(req.params.userId)
+    await OrderLineService.deleteAll(req.params.userId)
+    res.status(204).end()
+  } catch (error) {
+    if (error instanceof Error && error.name == 'ValidationError') {
+      next(new BadRequestError('Invalid Request', error))
+    } else {
       next(error)
     }
   }
