@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import passport from 'passport'
+// import { isAdmin } from '../middlewares/isAdmin'
 
 import {
   createUser,
@@ -12,7 +13,12 @@ import {
 
 const router = Router()
 
-router.get('/', passport.authenticate('jwt', { session: false }), findUsers)
+router.get(
+  '/',
+  passport.authenticate('jwt', { session: false }),
+  //  isAdmin
+  findUsers
+)
 router.get('/:userId', findById)
 router.post('/', createUser)
 router.put('/:userId', updateById)
