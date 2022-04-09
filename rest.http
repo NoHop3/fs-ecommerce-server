@@ -45,7 +45,7 @@ Content-Type: application/json
 
 ###
 GET http://localhost:5000/api/v1/users HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjMyMGQ1ODNkMTQ5NDQxYTQzMDM0ZjEiLCJlbWFpbCI6InVfc3V4M0BhYnYuYmciLCJ1c2VybmFtZSI6ImFzZGFzZDMiLCJpYXQiOjE2NDgwNzEwNzAsImV4cCI6MTY0ODA3NDY3MH0._Blx_wMjqPsKmHaHUlqCG9U4L_oE7IoeMn4Om_30DAQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjJiYjMwNTdiMmQzMTE1YTRhYjUwMDYiLCJfX3YiOjAsImVtYWlsIjoicl9nZW82QGdtYWlsLmNvbSIsInVzZXJuYW1lIjoiUmdlb3I2IiwiZmlyc3ROYW1lIjoiUmFmYWVsIiwibGFzdE5hbWUiOiJHZW9yZ2lvIiwiaXNBZG1pbiI6ZmFsc2UsImhhc1dyaXRlQWNjZXMiOmZhbHNlLCJmYXZvdXJpdGVzIjpbXSwiaWF0IjoxNjQ5NTI0OTEzLCJleHAiOjE2NDk1MjY3MTN9.S_rmqFhvXjvwNImQ5a1kcAOBle4P8F7FNhRaCArX134
 
 ########### Products ###############
 
@@ -82,7 +82,7 @@ Content-Type: application/json
 }
 
 ###
-PUT http://localhost:5000/api/v1/orderLines/623c5664180d06398c4d39d0
+PUT http://localhost:5000/api/v1/orderLines/623b3a7384b9baf1109053fa
 Content-Type: application/json
 
 {
@@ -105,16 +105,16 @@ DELETE http://localhost:5000/api/v1/orderLines/all/62326179b9c85d3fc833d686
 ########### Orders ###############
 
 ###
-POST http://localhost:5000/api/v1/orders/6229f9524f07b73d003e72f4
+POST http://localhost:5000/api/v1/orders/62326179b9c85d3fc833d686
 Content-Type: application/json
 
 {
-  "orderLines":[
-      {"_id": "6229f8df4f07b73d003e72eb"},
-      {"_id": "6229f8f14f07b73d003e72ef"}
+  "orderedlines":[
+      {"_id": "6251bce3955b501d94a8c728"},
+      {"_id": "6251bd9a69eb9e49407951ec"}
   ],
   "totalPrice":"121.99"
 }
 
 ###
-GET http://localhost:5000/api/v1/orders/6229f9524f07b73d003e72f4
+GET http://localhost:5000/api/v1/orders/62326179b9c85d3fc833d686

@@ -11,14 +11,12 @@ export const createOrder = async (
   next: NextFunction
 ) => {
   try {
-    const { orderLines, totalPrice } = req.body
-
+    const { orderedlines, totalPrice } = req.body
     const order = new Order({
       userId: req.params.userId,
-      orderLines,
+      orderedlines,
       totalPrice,
     })
-
     await OrderService.createOrder(order)
     res.json(order)
   } catch (error) {
@@ -38,7 +36,8 @@ export const findOrdersForUserId = async (
   next: NextFunction
 ) => {
   try {
-    res.json(await OrderService.findOrdersForUserId(req.params.userId))
+    const response = await OrderService.findOrdersForUserId(req.params.userId)
+    res.json(response)
   } catch (error) {
     console.log(error)
     if (error instanceof Error && error.name == 'ValidationError') {

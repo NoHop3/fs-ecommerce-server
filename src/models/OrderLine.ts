@@ -23,4 +23,8 @@ const orderLineSchema = new mongoose.Schema({
   },
 })
 
-export default mongoose.model<OrderLineDocument>('OrderLine', orderLineSchema)
+export default mongoose.model<OrderLineDocument>(
+  'OrderLine',
+  orderLineSchema,
+  'orderlines'
+)

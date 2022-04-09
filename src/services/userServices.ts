@@ -20,7 +20,10 @@ const createUser = async (user: UserDocument): Promise<UserDocument> => {
 }
 
 const findUsers = async (): Promise<UserDocument[]> => {
-  return User.find().sort({ email: 1 }).select('-password')
+  return User.find()
+    .sort({ email: 1 })
+    .select('-password')
+    .populate('favourites')
 }
 
 const findById = async (userId: string): Promise<UserDocument | null> => {
@@ -37,7 +40,7 @@ const updateById = async (
 ): Promise<UserDocument | null> => {
   const userToUpd = await User.findByIdAndUpdate(userId, propsToUpdate, {
     new: true,
-  })
+  }).select('-password')
   if (!userToUpd) {
     throw new NotFoundError(`User ${userId} not found`)
   }

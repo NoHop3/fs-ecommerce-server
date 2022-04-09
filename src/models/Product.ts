@@ -17,4 +17,8 @@ const productSchema = new mongoose.Schema({
   color: { type: String },
 })
 
-export default mongoose.model<ProductDocument>('Product', productSchema)
+export default mongoose.model<ProductDocument>(
+  'Product',
+  productSchema,
+  'products'
+)

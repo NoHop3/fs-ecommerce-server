@@ -1,9 +1,6 @@
 /* eslint-disable @typescript-eslint/member-delimiter-style */
 import mongoose, { Document } from 'mongoose'
 
-export type Order = {
-  orderId: string
-}
 export type Product = {
   productId: string
 }
@@ -17,7 +14,6 @@ export type UserDocument = Document & {
   image?: string
   isAdmin: boolean
   hasWriteAccess: boolean
-  orders: Order[]
   favourites: Product[]
 }
 
@@ -30,12 +26,6 @@ const userSchema = new mongoose.Schema({
   image: { type: String },
   isAdmin: { type: Boolean },
   hasWriteAccess: { type: Boolean },
-  orders: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Order',
-    },
-  ],
   favourites: [
     {
       type: mongoose.Schema.Types.ObjectId,
@@ -44,4 +34,4 @@ const userSchema = new mongoose.Schema({
   ],
 })
 
-export default mongoose.model<UserDocument>('User', userSchema)
+export default mongoose.model<UserDocument>('User', userSchema, 'users')

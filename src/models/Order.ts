@@ -2,24 +2,24 @@
 import mongoose, { Document } from 'mongoose'
 
 export type OrderLine = {
-  _id: string
+  orderlineId: string
 }
 
 export type OrderDocument = Document & {
   userId: string
-  orderLines: OrderLine[]
+  orderedlines: OrderLine[]
   totalPrice: number
 }
 
 const orderSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-  orderLines: [
+  totalPrice: Number,
+  orderedlines: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'OrderLine',
     },
   ],
-  totalPrice: Number,
 })
 
-export default mongoose.model<OrderDocument>('Order', orderSchema)
+export default mongoose.model<OrderDocument>('Order', orderSchema, 'orders')

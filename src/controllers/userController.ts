@@ -30,7 +30,6 @@ export const createUser = async (
       image,
       isAdmin: false,
       hasWriteAccess: false,
-      orders: [],
       favourites: [],
     })
 
@@ -63,13 +62,20 @@ export const loginUser = async (
       } else {
         const token = jwt.sign(
           {
-            userId: loginUser._id,
+            _id: loginUser._id,
+            __v: loginUser.__v,
             email: loginUser.email,
             username: loginUser.username,
+            firstName: loginUser.firstName,
+            lastName: loginUser.lastName,
+            isAdmin: loginUser.isAdmin,
+            hasWriteAcces: loginUser.hasWriteAccess,
+            image: loginUser.image,
+            favourites: loginUser.favourites,
           },
           JWT_SECRET,
           {
-            expiresIn: '1hr',
+            expiresIn: '30min',
           }
         )
         res.json({ token, loginUser })
