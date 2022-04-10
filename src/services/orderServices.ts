@@ -10,7 +10,7 @@ const findOrdersForUserId = async (
 ): Promise<OrderDocument[]> => {
   const ordersToReturn = await Order.find({ userId: userId })
     .sort({ _id: 1 })
-    .populate('userId')
+    .populate({ path: 'userId', select: '-password' })
     .populate({
       path: 'orderedlines',
       populate: { path: 'productId', model: 'Product' },
@@ -27,7 +27,6 @@ const findOrderById = async (
     throw new NotFoundError(`Order ${orderId} not found`)
   }
   if (orderToReturn.userId != userId) {
-    // console.log(userId + '<-->' + orderToReturn.userId)
     throw new BadRequestError(
       `Order ${orderId} is not made by this user ${userId}`
     )

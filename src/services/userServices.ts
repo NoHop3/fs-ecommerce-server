@@ -1,3 +1,5 @@
+import bcrypt from 'bcrypt'
+
 import { NotFoundError } from '../helpers/apiError'
 import User, { UserDocument } from '../models/User'
 // import { NotFoundError } from '../helpers/apiError'
@@ -38,6 +40,11 @@ const updateById = async (
   userId: string,
   propsToUpdate: Partial<UserDocument>
 ): Promise<UserDocument | null> => {
+  if (propsToUpdate.password) {
+    const salt = await bcrypt.genSalt(10)
+    const hashedPassword = await bcrypt.hash(propsToUpdate.password, salt)
+    Object.assign(propsToUpdate, { password: hashedPassword })
+  }
   const userToUpd = await User.findByIdAndUpdate(userId, propsToUpdate, {
     new: true,
   }).select('-password')
