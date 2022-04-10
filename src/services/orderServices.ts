@@ -1,6 +1,5 @@
 import Order, { OrderDocument } from '../models/Order'
 import { BadRequestError, NotFoundError } from '../helpers/apiError'
-import OrderLine from '../models/OrderLine'
 
 const createOrder = async (order: OrderDocument): Promise<OrderDocument> => {
   return await order.save()
@@ -12,7 +11,10 @@ const findOrdersForUserId = async (
   const ordersToReturn = await Order.find({ userId: userId })
     .sort({ _id: 1 })
     .populate('userId')
-    .populate({ path: 'orderedlines', model: OrderLine })
+    .populate({
+      path: 'orderedlines',
+      populate: { path: 'productId', model: 'Product' },
+    })
   return ordersToReturn
 }
 

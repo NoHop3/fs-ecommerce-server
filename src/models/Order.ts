@@ -2,7 +2,7 @@
 import mongoose, { Document } from 'mongoose'
 
 export type OrderLine = {
-  orderlineId: string
+  _id: string
 }
 
 export type OrderDocument = Document & {
