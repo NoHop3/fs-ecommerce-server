@@ -1,17 +1,9 @@
 import OrderLine, { OrderLineDocument } from '../models/OrderLine'
-import { BadRequestError, NotFoundError } from '../helpers/apiError'
+import { NotFoundError } from '../helpers/apiError'
 
 const createOrderLine = async (
   orderLine: OrderLineDocument
 ): Promise<OrderLineDocument> => {
-  const orderLineToReturn = await OrderLine.findOne({
-    productId: orderLine.productId,
-  })
-  if (orderLineToReturn) {
-    throw new BadRequestError(
-      `Such product ${orderLine.productId} has been already ordered!`
-    )
-  }
   const returnOrderLine = await orderLine.save()
   return returnOrderLine.populate('productId').execPopulate()
 }
