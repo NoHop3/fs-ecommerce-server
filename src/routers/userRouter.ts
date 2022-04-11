@@ -16,7 +16,7 @@ const router = Router()
 router.get(
   '/',
   passport.authenticate('jwt', { session: false }),
-  //  isAdmin
+  //  isAdmin,
   findUsers
 )
 router.get('/:userId', findById)

@@ -44,6 +44,9 @@ Content-Type: application/json
 }
 
 ###
+GET http://localhost:5000/api/v1/users/62326179b9c85d3fc833d686
+
+###
 GET http://localhost:5000/api/v1/users HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjJiYjMwNTdiMmQzMTE1YTRhYjUwMDYiLCJfX3YiOjAsImVtYWlsIjoicl9nZW82QGdtYWlsLmNvbSIsInVzZXJuYW1lIjoiUmdlb3I2IiwiZmlyc3ROYW1lIjoiUmFmYWVsIiwibGFzdE5hbWUiOiJHZW9yZ2lvIiwiaXNBZG1pbiI6ZmFsc2UsImhhc1dyaXRlQWNjZXMiOmZhbHNlLCJmYXZvdXJpdGVzIjpbXSwiaWF0IjoxNjQ5NTI0OTEzLCJleHAiOjE2NDk1MjY3MTN9.S_rmqFhvXjvwNImQ5a1kcAOBle4P8F7FNhRaCArX134
 
