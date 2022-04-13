@@ -15,7 +15,6 @@ export const createOrderLine = async (
 
     const orderLine = new OrderLine({
       productId: req.params.productId,
-      userId: req.params.userId,
       quantity,
       price,
     })
@@ -32,24 +31,7 @@ export const createOrderLine = async (
   }
 }
 
-// GET /orderLines
-export const findOrderLines = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
-    res.json(await OrderLineService.findOrderLines(req.params.userId))
-  } catch (error) {
-    if (error instanceof Error && error.name == 'ValidationError') {
-      next(new BadRequestError('Invalid Request', error))
-    } else {
-      next(error)
-    }
-  }
-}
-
-// GET /orderLine by ID
+// GET /:orderlineId
 export const findOrderLineById = async (
   req: Request,
   res: Response,
@@ -95,46 +77,6 @@ export const deleteOrderLineById = async (
 ) => {
   try {
     await OrderLineService.deleteById(req.params.orderLineId)
-    res.status(204).end()
-  } catch (error) {
-    if (error instanceof Error && error.name == 'ValidationError') {
-      next(new BadRequestError('Invalid Request', error))
-    } else {
-      next(error)
-    }
-  }
-}
-
-// DELETE /:productId
-export const deleteOrderLineByProductId = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
-    await OrderLineService.deleteByProductId(
-      req.params.userId,
-      req.params.productId
-    )
-    res.status(204).end()
-  } catch (error) {
-    if (error instanceof Error && error.name == 'ValidationError') {
-      next(new BadRequestError('Invalid Request', error))
-    } else {
-      console.log(error)
-      next(error)
-    }
-  }
-}
-
-export const deleteAllOrderLines = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
-    console.log(req.params.userId)
-    await OrderLineService.deleteAll(req.params.userId)
     res.status(204).end()
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {

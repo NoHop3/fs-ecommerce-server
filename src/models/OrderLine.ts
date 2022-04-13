@@ -3,7 +3,6 @@ import mongoose, { Document } from 'mongoose'
 
 export type OrderLineDocument = Document & {
   productId: string
-  userId: string
   quantity: number
   price: number
 }
@@ -14,11 +13,6 @@ const orderLineSchema = new mongoose.Schema({
   productId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Product',
-    required: true,
-  },
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
     required: true,
   },
 })

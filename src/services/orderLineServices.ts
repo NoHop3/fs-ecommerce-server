@@ -8,12 +8,6 @@ const createOrderLine = async (
   return returnOrderLine.populate('productId').execPopulate()
 }
 
-const findOrderLines = async (userId: string): Promise<OrderLineDocument[]> => {
-  return OrderLine.find({ userId: userId })
-    .sort({ productId: 1 })
-    .populate('productId')
-}
-
 const findById = async (orderLineId: string): Promise<OrderLineDocument> => {
   const orderLineToReturn = await OrderLine.findById(orderLineId).populate(
     'productId'
@@ -47,39 +41,10 @@ const deleteById = async (orderLineId: string): Promise<void> => {
     throw new NotFoundError(`OrderLine ${orderLineId} not found`)
   }
 }
-const deleteByProductId = async (
-  userId: string,
-  productId: string
-): Promise<void> => {
-  const orderLineToDelete = await OrderLine.find({
-    userId: userId,
-    productId: productId,
-  })
-  if (!orderLineToDelete) {
-    throw new NotFoundError(
-      `OrderLine containing this product ${productId} not found`
-    )
-  }
-  await OrderLine.deleteOne({
-    userId: userId,
-    productId: productId,
-  })
-}
-
-const deleteAll = async (userId: string): Promise<void> => {
-  try {
-    await OrderLine.deleteMany({ userId: userId })
-  } catch (error) {
-    console.log(error)
-  }
-}
 
 export default {
   createOrderLine,
-  findOrderLines,
   findById,
   updateById,
   deleteById,
-  deleteByProductId,
-  deleteAll,
 }
