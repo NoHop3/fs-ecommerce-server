@@ -1,4 +1,7 @@
 import { Router } from 'express'
+
+import { isAdmin } from '../middlewares/isAdmin'
+import { hasWriteAccess } from '../middlewares/hasWriteAccess'
 import {
   findProducts,
   createProduct,
@@ -6,13 +9,29 @@ import {
   updateProductById,
   deleteProductById,
 } from '../controllers/productController'
+import passport from 'passport'
 
 const router = Router()
 
 router.get('/', findProducts)
-router.post('/', createProduct)
+router.post(
+  '/',
+  passport.authenticate('jwt', { session: false }),
+  hasWriteAccess,
+  createProduct
+)
 router.get('/:productId', findProductById)
-router.put('/:productId', updateProductById)
-router.delete('/:productId', deleteProductById)
+router.put(
+  '/:productId',
+  passport.authenticate('jwt', { session: false }),
+  isAdmin,
+  updateProductById
+)
+router.delete(
+  '/:productId',
+  passport.authenticate('jwt', { session: false }),
+  isAdmin,
+  deleteProductById
+)
 
 export default router
