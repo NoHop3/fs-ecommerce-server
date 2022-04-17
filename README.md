@@ -1,27 +1,23 @@
-# Fullstack-Typescript-Project
+# E-Commerce Full-stack project created with lots of ❤️ 
 
-## Prerequisites
+## Technology stack: React.js, Redux.js, Typescript, SCSS
 
-1. Install mongodb
-2. Install nodejs
+### The client side of the project
 
-## Setting Up
+This project was implemented during a 3-week period as a part of the second module during the Fullstack academy course at Integrify.
 
-1. Create a `.env` file in the root directory and copy the content from `.env.example`
+Deployed at: Link to be added.....
 
-2. Make sure mongodb is running
-3. Install dependencies: `yarn`
-4. Run `yarn build-ts`
-4. Use this command for development mode: `yarn watch`
+Sample snapshots from some of the pages in the application:
 
-## Requirements
+### Home page
+![image](https://user-images.githubusercontent.com/82092907/163262613-1ee8ce3a-ee28-43cc-8219-e17e979974e2.png)
 
-Below are the steps that you need to finish in order to finish this module
+### Products page
+![image](https://user-images.githubusercontent.com/82092907/163262705-c1bfb5fe-d983-48ab-9827-38d2b8e6d49d.png)
 
-1. Explore the code base, start with `server.ts`
-2. Create all the mongoose schema for your Project
-3. Create CRUD endpoints for all the schema
-4. Separate the routers and controller, controller goes into the controller folders. Controllers only handles request and response
-5. For business logic like saving data to database, filtering, searching or updating, these are services and goes into services folder
-6. Add authentication middleware using passport jwt strategy
+### Navigation
+![image](https://user-images.githubusercontent.com/82092907/163262668-8ed27821-a109-4c27-b9cc-f6f73edbc504.png)
 
+### User profile page
+![image](https://user-images.githubusercontent.com/82092907/163262758-6d6bb79d-ab10-4347-965b-ea962782a81d.png)
