@@ -12,7 +12,6 @@
 },
   "author": "Bowden Kelly",
   "license": "MIT",
-  "proxy":"http://localhost:5000",
   "scripts": {
     "start": "node dist/server.js",
     "build": "npm run build-ts && npm run lint",
