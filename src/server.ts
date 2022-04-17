@@ -12,7 +12,7 @@ mongoose
     autoIndex: true,
   })
   .then(() => {
-    app.listen(process.env.PORT, () =>
+    app.listen(process.env.PORT || 5000, () =>
       console.log(`App running on port ${process.env.PORT}`)
     )
   })
