@@ -41,4 +41,5 @@ dist/**/*
 *.swp
 
 # Rest server
+rest.http
 *.http
