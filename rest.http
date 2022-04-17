@@ -1,55 +1,5 @@
 ########### Users ###############
 
-###
-POST http://localhost:5000/api/v1/users
-Content-Type: application/json
-
-{
-  "email": "u_sux@abv.bg",
-  "username": "asdasd",
-  "password": "233223",
-  "confirmPassword": "233232",
-  "firstName": "Stefan",
-  "lastName": "Georgiev",
-  "image": ""
-}
-
-
-###
-
-POST http://localhost:5000/api/v1/users/login HTTP/1.1
-Content-Type: application/json
-
-{
-  "email":"u_sux3@abv.bg",
-  "password": "233223"
-}
-
-###
-
-POST http://localhost:5000/api/v1/users/login HTTP/1.1
-Content-Type: application/json
-
-{
-  "username": "stef1222",
-  "password": "2312re"
-}
-
-###
-PUT http://localhost:5000/api/v1/users/623262833d7ee0211cabdf6a
-Content-Type: application/json
-
-{
-  "email": "nqkafdr@email.com"
-}
-
-###
-GET http://localhost:5000/api/v1/users/62326179b9c85d3fc833d686
-
-###
-GET http://localhost:5000/api/v1/users HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjJiYjMwNTdiMmQzMTE1YTRhYjUwMDYiLCJfX3YiOjAsImVtYWlsIjoicl9nZW82QGdtYWlsLmNvbSIsInVzZXJuYW1lIjoiUmdlb3I2IiwiZmlyc3ROYW1lIjoiUmFmYWVsIiwibGFzdE5hbWUiOiJHZW9yZ2lvIiwiaXNBZG1pbiI6ZmFsc2UsImhhc1dyaXRlQWNjZXMiOmZhbHNlLCJmYXZvdXJpdGVzIjpbXSwiaWF0IjoxNjQ5NTI0OTEzLCJleHAiOjE2NDk1MjY3MTN9.S_rmqFhvXjvwNImQ5a1kcAOBle4P8F7FNhRaCArX134
-
 ########### Products ###############
 
 ###
@@ -67,7 +17,7 @@ GET http://localhost:5000/api/v1/products
 
 ###
 DELETE http://localhost:5000/api/v1/products/62571d804dcaf8e80128484c
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjMyNjE3OWI5Yzg1ZDNmYzgzM2Q2ODYiLCJfX3YiOjAsImVtYWlsIjoidGVzdGNoZV9lbWFpbGNoZUBnbWFpbC5jb20iLCJ1c2VybmFtZSI6InN0ZWYxMjIyIiwiZmlyc3ROYW1lIjoiU3RlZmFuIiwibGFzdE5hbWUiOiJHZW9yZ2lldiIsImlzQWRtaW4iOnRydWUsImhhc1dyaXRlQWNjZXMiOnRydWUsImltYWdlIjoiaHR0cHM6Ly9yZXMuY2xvdWRpbmFyeS5jb20vZHRnZ2R4M2hjL2ltYWdlL3VwbG9hZC92MTY0OTY3NjY1OS9mZm94eGtobDV1bnVwdWtjdzlkeC5wbmciLCJmYXZvdXJpdGVzIjpbIjYyM2IzYWZhZGEwZTc4Mjg2MDJjNzhkZiIsIjYyM2IzYjQ5ZGEwZTc4Mjg2MDJjNzhlNyIsIjYyM2IzOWJhODRiOWJhZjExMDkwNTNmNyIsIjYyM2IzYjU5ZGEwZTc4Mjg2MDJjNzhlOSIsIjYyM2IzOWU2ODRiOWJhZjExMDkwNTNmOCIsIjYyM2IzYjI0ZGEwZTc4Mjg2MDJjNzhlMyJdLCJpYXQiOjE2NDk4NzYzOTEsImV4cCI6MTY0OTg3ODE5MX0.w5rJMPKv34MJ1jLXJThIpWhTB0__MidEm8n4z1-rn7Y
+Authorization: Bearer 
 
 
 ########### OrderLines ###############
