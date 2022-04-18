@@ -6,7 +6,7 @@
 
 This project was implemented during a 3-week period as a part of the second module during the Fullstack academy course at Integrify.
 
-Deployed at: Link to be added soon.
+Deployed at: https://stgecommerce.netlify.app/
 
 Sample snapshots from some of the pages in the application:
 
