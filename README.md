@@ -8,6 +8,14 @@ This project was implemented during a 3-week period as a part of the second modu
 
 Deployed at: https://stgecommerce.netlify.app/
 
+##### Sample sign in credentials with write rights to add new products
+
+````
+Email: can be left blank
+Username: testWrite
+Password/Confirm Password: 1111
+````
+
 Sample snapshots from some of the pages in the application:
 
 ### Home page
